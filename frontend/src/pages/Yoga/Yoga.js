@@ -213,7 +213,7 @@ const Yoga = () => {
             }
             setCurrentTime(new Date(Date()).getTime());
             skeletonColor = "rgb(0,255,0)";
-
+            
             switch (currentPose) {
               case "Tree":
                 //const { rLegAngle, rightAnkle, rightKnee, rightHip } = treeRightLegAngle(pose);
