@@ -1,3 +1,5 @@
+import { getKernelsForBackend } from "@tensorflow/tfjs";
+
 const treeStandard = [
   { x: 0.16241682, y: 0.5007238, score: 0.53869903 },
   { x: 0.14587405, y: 0.51914084, score: 0.47752625 },
@@ -44,12 +46,12 @@ const treeStandardAngle = {
  RIGHT_ANKLE = 16;
 */
 
+let beforeActoion=false;
+
 export const updateRightLegAngle = (poses) => {
   const rightHip = poses[0].keypoints[12];
   const rightKnee = poses[0].keypoints[14];
   const rightAnkle = poses[0].keypoints[16];
-
-  //const msg = new SpeechSynthesisUtterance("Keep your back straight");
 
   let returnAngle = 0;
   let angle = 0;
@@ -72,12 +74,31 @@ export const updateRightLegAngle = (poses) => {
     returnAngle = angle;
   }
 
-  /*if (returnAngle > treeStandardAngle.right_leg + 15) {
-    if (backWarningGiven === false) {
-      window.speechSynthesis.speak(msg);
+  const fail = new SpeechSynthesisUtterance("Keep your back straight");
+  const success = new SpeechSynthesisUtterance("success");
+
+  if (returnAngle > treeStandardAngle.right_leg + 15) {
+    if(beforeActoion==false){
+      console.log("fail");
     }
-    backWarningGiven = true;
-  }*/
+    else{
+      window.speechSynthesis.cancel();
+      console.log("fail2");
+      window.speechSynthesis.speak(fail);
+    }
+    beforeActoion=false;
+  }
+  else{
+    if(beforeActoion==false){
+      window.speechSynthesis.cancel();
+      console.log("success");
+      window.speechSynthesis.speak(success);
+    }
+    else{
+      console.log("success2");
+    }
+    beforeActoion=true;
+  }
   return returnAngle;
 };
 

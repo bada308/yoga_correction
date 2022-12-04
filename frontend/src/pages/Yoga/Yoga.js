@@ -220,12 +220,6 @@ const Yoga = () => {
               case 6:
                 const legAngle = updateRightLegAngle(pose);
                 console.log("Leg Angle : ", legAngle);
-                if (legAngle > 60) {
-                  var msg = new SpeechSynthesisUtterance(
-                    "Keep your back straight"
-                  );
-                  window.speechSynthesis.speak(msg);
-                }
                 break;
               default:
                 break;
