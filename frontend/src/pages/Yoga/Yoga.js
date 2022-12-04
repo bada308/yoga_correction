@@ -13,11 +13,9 @@ import DropDown from "../../components/DropDown/DropDown";
 import { poseImages } from "../../utils/pose_images";
 import { POINTS, keypointConnections } from "../../utils/data";
 import { drawPoint, drawSegment } from "../../utils/helper";
-import {
-  updateLeftArmAngle,
-  updateRightArmAngle,
-  updateRightLegAngle,
-} from "./YogaCorrection";
+import { treeRightLegAngle } from "./TreeCorrection";
+import { chairHipAngle } from "./ChairCorrection";
+import { dogHipAngle } from "./DogCorrection";
 
 let skeletonColor = "rgb(255,255,255)";
 let poseList = [
@@ -137,7 +135,7 @@ const Yoga = () => {
 
   const runMovenet = async () => {
     const detectorConfig = {
-      modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER,
+      modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
     };
     const detector = await poseDetection.createDetector(
       poseDetection.SupportedModels.MoveNet,
@@ -216,17 +214,84 @@ const Yoga = () => {
             setCurrentTime(new Date(Date()).getTime());
             skeletonColor = "rgb(0,255,0)";
 
-            switch (classNo) {
-              case 6:
-                const legAngle = updateRightLegAngle(pose);
-                console.log("Leg Angle : ", legAngle);
-                if (legAngle > 60) {
-                  var msg = new SpeechSynthesisUtterance(
-                    "Keep your back straight"
+            switch (currentPose) {
+              case "Tree":
+                //const { rLegAngle, rightAnkle, rightKnee, rightHip } = treeRightLegAngle(pose);
+                const treeLeg = treeRightLegAngle(pose);
+                if (treeLeg.rLegAngle > 55) {
+                  drawSegment(
+                    ctx,
+                    [treeLeg.rightAnkle.x, treeLeg.rightAnkle.y],
+                    [treeLeg.rightKnee.x, treeLeg.rightKnee.y],
+                    "rgb(255, 0, 0)"
                   );
-                  window.speechSynthesis.speak(msg);
+                  drawSegment(
+                    ctx,
+                    [treeLeg.rightHip.x, treeLeg.rightHip.y],
+                    [treeLeg.rightKnee.x, treeLeg.rightKnee.y],
+                    "rgb(255, 0, 0)"
+                  );
                 }
                 break;
+              case "Chair":
+                const chairHip = chairHipAngle(pose);
+                if (chairHip.hipAngle > 100) {
+                  drawSegment(
+                    ctx,
+                    [chairHip.point1.x, chairHip.point1.y],
+                    [chairHip.point2.x, chairHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.point3.x, chairHip.point3.y],
+                    [chairHip.point2.x, chairHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.cpoint1.x, chairHip.cpoint1.y],
+                    [chairHip.cpoint2.x, chairHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.cpoint3.x, chairHip.cpoint3.y],
+                    [chairHip.cpoint2.x, chairHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                }
+                break;
+              case "Dog":
+                const dogHip = dogHipAngle(pose);
+                if (dogHip.hipAngle > 90 || dogHip.hipAngle < 50) {
+                  drawSegment(
+                    ctx,
+                    [dogHip.point1.x, dogHip.point1.y],
+                    [dogHip.point2.x, dogHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.point3.x, dogHip.point3.y],
+                    [dogHip.point2.x, dogHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.cpoint1.x, dogHip.cpoint1.y],
+                    [dogHip.cpoint2.x, dogHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.cpoint3.x, dogHip.cpoint3.y],
+                    [dogHip.cpoint2.x, dogHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                }
+                break;
+
               default:
                 break;
             }

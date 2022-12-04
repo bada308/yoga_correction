@@ -1,3 +1,5 @@
+import { drawSegment } from "../../utils/helper";
+
 const treeStandard = [
   { x: 0.16241682, y: 0.5007238, score: 0.53869903 },
   { x: 0.14587405, y: 0.51914084, score: 0.47752625 },
@@ -24,34 +26,12 @@ const treeStandardAngle = {
   left_arm: 39.6,
 };
 
-/*
- NOSE = 0;
- LEFT_EYE = 1;
- RIGHT_EYE = 2;
- LEFT_EAR = 3;
- RIGHT_EAR = 4;
- LEFT_SHOULDER = 5;
- RIGHT_SHOULDER = 6;
- LEFT_ELBOW = 7;
- RIGHT_ELBOW = 8;
- LEFT_WRIST = 9;
- RIGHT_WRIST = 10;
- LEFT_HIP = 11;
- RIGHT_HIP = 12;
- LEFT_KNEE = 13;
- RIGHT_KNEE = 14;
- LEFT_ANKLE = 15;
- RIGHT_ANKLE = 16;
-*/
-
-export const updateRightLegAngle = (poses) => {
+export const treeRightLegAngle = (poses) => {
   const rightHip = poses[0].keypoints[12];
   const rightKnee = poses[0].keypoints[14];
   const rightAnkle = poses[0].keypoints[16];
 
-  //const msg = new SpeechSynthesisUtterance("Keep your back straight");
-
-  let returnAngle = 0;
+  let rLegAngle = 0;
   let angle = 0;
 
   const angle1 = Math.atan2(rightHip.y - rightKnee.y, rightHip.x - rightKnee.x);
@@ -69,23 +49,17 @@ export const updateRightLegAngle = (poses) => {
   }
 
   if (rightAnkle.score > 0.3 && rightHip.score > 0.3 && rightKnee.score > 0.3) {
-    returnAngle = angle;
+    rLegAngle = angle;
   }
 
-  /*if (returnAngle > treeStandardAngle.right_leg + 15) {
-    if (backWarningGiven === false) {
-      window.speechSynthesis.speak(msg);
-    }
-    backWarningGiven = true;
-  }*/
-  return returnAngle;
+  return { rLegAngle, rightAnkle, rightKnee, rightHip };
 };
 
-export const updateRightArmAngle = (poses) => {
+export const treeRightArmAngle = (poses) => {
   const rightShoulder = poses[0].keypoints[6];
   const rightElbow = poses[0].keypoints[8];
   const rightWrist = poses[0].keypoints[10];
-  let returnAngle = 0;
+  let rArmAngle = 0;
   let angle = 0;
 
   const angle1 = Math.atan2(
@@ -110,17 +84,17 @@ export const updateRightArmAngle = (poses) => {
     rightElbow.score > 0.3 &&
     rightShoulder.score > 0.3
   ) {
-    returnAngle = angle;
+    rArmAngle = angle;
   }
 
-  return returnAngle;
+  return { rArmAngle, rightShoulder, rightElbow, rightWrist };
 };
 
-export const updateLeftArmAngle = (poses) => {
+export const treeLeftArmAngle = (poses) => {
   const leftShoulder = poses[0].keypoints[5];
   const leftElbow = poses[0].keypoints[7];
   const leftWrist = poses[0].keypoints[9];
-  let returnAngle = 0;
+  let lArmAngle = 0;
   let angle = 0;
 
   const angle1 = Math.atan2(
@@ -145,8 +119,8 @@ export const updateLeftArmAngle = (poses) => {
     leftElbow.score > 0.3 &&
     leftShoulder.score > 0.3
   ) {
-    returnAngle = angle;
+    lArmAngle = angle;
   }
 
-  return returnAngle;
+  return { lArmAngle, leftShoulder, leftElbow, leftWrist };
 };
