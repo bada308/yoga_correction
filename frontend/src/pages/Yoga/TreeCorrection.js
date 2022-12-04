@@ -1,5 +1,6 @@
 import { drawSegment } from "../../utils/helper";
 
+
 const treeStandard = [
   { x: 0.16241682, y: 0.5007238, score: 0.53869903 },
   { x: 0.14587405, y: 0.51914084, score: 0.47752625 },
@@ -25,6 +26,8 @@ const treeStandardAngle = {
   right_arm: 32.21,
   left_arm: 39.6,
 };
+
+let beforeActoion=false;
 
 export const treeRightLegAngle = (poses) => {
   const rightHip = poses[0].keypoints[12];
@@ -52,7 +55,33 @@ export const treeRightLegAngle = (poses) => {
     rLegAngle = angle;
   }
 
+  const fail = new SpeechSynthesisUtterance("Keep your back straight");
+  const success = new SpeechSynthesisUtterance("success");
+
+  if (rLegAngle > treeStandardAngle.right_leg + 15) {
+    if(beforeActoion==false){
+      console.log("fail");
+    }
+    else{
+      window.speechSynthesis.cancel();
+      console.log("fail2");
+      window.speechSynthesis.speak(fail);
+    }
+    beforeActoion=false;
+  }
+  else{
+    if(beforeActoion==false){
+      window.speechSynthesis.cancel();
+      console.log("success");
+      window.speechSynthesis.speak(success);
+    }
+    else{
+      console.log("success2");
+    }
+    beforeActoion=true;
+  }
   return { rLegAngle, rightAnkle, rightKnee, rightHip };
+
 };
 
 export const treeRightArmAngle = (poses) => {
