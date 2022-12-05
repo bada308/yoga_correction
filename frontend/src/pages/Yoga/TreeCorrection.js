@@ -27,8 +27,6 @@ const treeStandardAngle = {
   left_arm: 39.6,
 };
 
-let beforeActoion=false;
-
 export const treeRightLegAngle = (poses) => {
   const rightHip = poses[0].keypoints[12];
   const rightKnee = poses[0].keypoints[14];
@@ -54,6 +52,8 @@ export const treeRightLegAngle = (poses) => {
   if (rightAnkle.score > 0.3 && rightHip.score > 0.3 && rightKnee.score > 0.3) {
     rLegAngle = angle;
   }
+
+  let beforeActoion=false;
 
   const fail = new SpeechSynthesisUtterance("다리를 올리세요");
   fail.lang='ko-KR';
