@@ -18,6 +18,8 @@ const dogStandard = [
   { x: 0.71208286, y: 0.0797503, score: 0.6776126 },
 ];
 
+let beforeActoion=false;
+
 // Standard Hip Angle = 68.56
 
 export const dogHipAngle = (poses) => {
@@ -46,5 +48,34 @@ export const dogHipAngle = (poses) => {
   if (point1.score > 0.3 && point2.score > 0.3 && point3.score > 0.3) {
     hipAngle = angle;
   }
+
+  const fail = new SpeechSynthesisUtterance("등을 더 피세요");
+  fail.lang='ko-KR';
+  const success = new SpeechSynthesisUtterance("성공입니다");
+  success.lang='ko-KR';
+
+  if (hipAngle > 90 || hipAngle < 50) {
+    if(beforeActoion==false){
+      console.log("fail");
+    }
+    else{
+      window.speechSynthesis.cancel();
+      console.log("fail2");
+      window.speechSynthesis.speak(fail);
+    }
+    beforeActoion=false;
+  }
+  else{
+    if(beforeActoion==false){
+      window.speechSynthesis.cancel();
+      console.log("success");
+      window.speechSynthesis.speak(success);
+    }
+    else{
+      console.log("success2");
+    }
+    beforeActoion=true;
+  }
+
   return { hipAngle, point1, point2, point3, cpoint1, cpoint2, cpoint3 };
 };
