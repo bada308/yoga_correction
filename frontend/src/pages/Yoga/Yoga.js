@@ -19,13 +19,9 @@ import { dogHipAngle } from "./DogCorrection";
 
 let skeletonColor = "rgb(255,255,255)";
 let poseList = [
-  "Tree",
-  "Chair",
-  "Cobra",
-  "Warrior",
-  "Dog",
-  "Shoulderstand",
-  "Traingle",
+  { en: "Tree", kr: "나무 자세" },
+  { en: "Chair", kr: "의자 자세" },
+  { en: "Dog", kr: "개 자세" },
 ];
 
 let interval;
@@ -213,7 +209,7 @@ const Yoga = () => {
             }
             setCurrentTime(new Date(Date()).getTime());
             skeletonColor = "rgb(0,255,0)";
-            
+
             switch (currentPose) {
               case "Tree":
                 //const { rLegAngle, rightAnkle, rightKnee, rightHip } = treeRightLegAngle(pose);
