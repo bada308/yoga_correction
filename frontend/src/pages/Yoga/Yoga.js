@@ -308,7 +308,7 @@ const Yoga = () => {
     setIsStartPose(true);
     runMovenet();
   }
-
+ 
   function stopPose() {
     setIsStartPose(false);
     clearInterval(interval);
