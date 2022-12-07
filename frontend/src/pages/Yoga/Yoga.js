@@ -169,18 +169,24 @@ const Yoga = () => {
             if (
               !(keypoint.name === "left_eye" || keypoint.name === "right_eye")
             ) {
-              drawPoint(ctx, keypoint.x, keypoint.y, 8, "rgb(255,255,255)"); // 관절에 원 그리기
+              drawPoint(
+                ctx,
+                keypoint.x * 1.5,
+                keypoint.y * 1.5,
+                8,
+                "rgb(255,255,255)"
+              ); // 관절에 원 그리기
               let connections = keypointConnections[keypoint.name]; // keypointConnection 안에는 각각의 점이 어떤 점과 연결되는지 정의되어있음
               try {
                 connections.forEach((connection) => {
                   let conName = connection.toUpperCase();
                   drawSegment(
                     ctx,
-                    [keypoint.x, keypoint.y], // 현재 keypoint의 좌표
+                    [keypoint.x * 1.5, keypoint.y * 1.5], // 현재 keypoint의 좌표
                     [
                       // 연결되어야 하는 connection의 좌표
-                      keypoints[POINTS[conName]].x,
-                      keypoints[POINTS[conName]].y,
+                      keypoints[POINTS[conName]].x * 1.5,
+                      keypoints[POINTS[conName]].y * 1.5,
                     ],
                     skeletonColor
                   );
@@ -337,13 +343,25 @@ const Yoga = () => {
           </div>
         </div>
         <div className="webcam-canvas-container">
-          <Webcam width="1280px" height="720px" id="webcam" ref={webcamRef} />
+          <Webcam
+            width="960px"
+            height="720px"
+            id="webcam"
+            ref={webcamRef}
+            style={{
+              position: "absolute",
+              top: 100,
+              padding: "0px",
+            }}
+          />
           <canvas
             ref={canvasRef}
             id="my-canvas"
-            width="1280px"
+            width="960px"
             height="720px"
             style={{
+              position: "absolute",
+              top: 100,
               zIndex: 1,
             }}
           ></canvas>
