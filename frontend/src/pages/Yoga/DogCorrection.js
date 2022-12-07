@@ -49,7 +49,7 @@ export const dogHipAngle = (poses) => {
     hipAngle = angle;
   }
 
-  const fail = new SpeechSynthesisUtterance("등을 더 피세요");
+  const fail = new SpeechSynthesisUtterance("엉덩이를 높이 올리세요");
   fail.lang='ko-KR';
   const success = new SpeechSynthesisUtterance("성공입니다");
   success.lang='ko-KR';
