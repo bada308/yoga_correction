@@ -9,13 +9,14 @@ import Instructions from "../../components/Instrctions/Instructions";
 
 import "./Yoga.css";
 
-import DropDown from "../../components/DropDown/DropDown";
 import { poseImages } from "../../utils/pose_images";
+import back_arrow from "../../utils/images/arrow.png";
 import { POINTS, keypointConnections } from "../../utils/data";
 import { drawPoint, drawSegment } from "../../utils/helper";
 import { treeRightLegAngle } from "./TreeCorrection";
 import { chairHipAngle } from "./ChairCorrection";
 import { dogHipAngle } from "./DogCorrection";
+import { NavLink } from "react-router-dom";
 
 let skeletonColor = "rgb(255,255,255)";
 let poseList = [
@@ -317,6 +318,16 @@ const Yoga = () => {
   if (isStartPose) {
     return (
       <div className="yoga-container">
+        <div className="yoga-header">
+          {poseList.map((pose) => (
+            <div class="drop-container" onClick={() => setCurrentPose(pose.en)}>
+              <p className="dropdown-item-1">{pose.en}</p>
+            </div>
+          ))}
+          <button onClick={stopPose} className="secondary-btn">
+            Stop Pose
+          </button>
+        </div>
         <div className="performance-container">
           <div className="pose-performance">
             <h4>Pose Time: {poseTime} s</h4>
@@ -325,28 +336,14 @@ const Yoga = () => {
             <h4>Best: {bestPerform} s</h4>
           </div>
         </div>
-        <div>
-          <Webcam
-            width="640px"
-            height="480px"
-            id="webcam"
-            ref={webcamRef}
-            style={{
-              position: "absolute",
-              left: 120,
-              top: 100,
-              padding: "0px",
-            }}
-          />
+        <div className="webcam-canvas-container">
+          <Webcam width="1280px" height="720px" id="webcam" ref={webcamRef} />
           <canvas
             ref={canvasRef}
             id="my-canvas"
-            width="640px"
-            height="480px"
+            width="1280px"
+            height="720px"
             style={{
-              position: "absolute",
-              left: 120,
-              top: 100,
               zIndex: 1,
             }}
           ></canvas>
@@ -354,24 +351,23 @@ const Yoga = () => {
             <img src={poseImages[currentPose]} className="pose-img" />
           </div>
         </div>
-        <button onClick={stopPose} className="secondary-btn">
-          Stop Pose
-        </button>
       </div>
     );
   }
 
   return (
     <div className="yoga-container">
-      <DropDown
-        poseList={poseList}
-        currentPose={currentPose}
-        setCurrentPose={setCurrentPose}
-      />
+      <div className="yoga-header">
+        {poseList.map((pose) => (
+          <div class="drop-container" onClick={() => setCurrentPose(pose.en)}>
+            <p className="dropdown-item-1">{pose.en}</p>
+          </div>
+        ))}
+        <button onClick={startYoga} className="secondary-btn">
+          Start
+        </button>
+      </div>
       <Instructions currentPose={currentPose} />
-      <button onClick={startYoga} className="secondary-btn">
-        Start Pose
-      </button>
     </div>
   );
 };
