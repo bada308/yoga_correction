@@ -182,11 +182,11 @@ const Yoga = () => {
                   let conName = connection.toUpperCase();
                   drawSegment(
                     ctx,
-                    [keypoint.x, keypoint.y], // 현재 keypoint의 좌표
+                    [keypoint.x * 1.5, keypoint.y * 1.5], // 현재 keypoint의 좌표
                     [
                       // 연결되어야 하는 connection의 좌표
-                      keypoints[POINTS[conName]].x,
-                      keypoints[POINTS[conName]].y,
+                      keypoints[POINTS[conName]].x * 1.5,
+                      keypoints[POINTS[conName]].y * 1.5,
                     ],
                     skeletonColor
                   );
