@@ -1,6 +1,5 @@
 .instructions-list {
   width: 40%;
-  background-color: rgb(255, 227, 225);
   border-style: none;
   margin-top: 10vh;
   padding: 3% 2%;
@@ -9,6 +8,7 @@
 .instruction {
   margin: 10px;
   letter-spacing: 0.5px;
+
   color: rgb(28, 28, 28);
   font-weight: 400;
   font-size: 20px;
@@ -17,6 +17,7 @@
 }
 
 .instructions-container {
+  margin: 3% 10%;
   height: 70vh;
   display: flex;
   justify-content: space-evenly;
