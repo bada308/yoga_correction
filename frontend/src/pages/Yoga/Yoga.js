@@ -56,6 +56,8 @@ const Yoga = () => {
     setCurrentTime(0);
     setPoseTime(0);
     setBestPerform(0);
+    stopPose();
+    startYoga();
   }, [currentPose]);
 
   const CLASS_NO = {
@@ -149,6 +151,7 @@ const Yoga = () => {
   };
 
   const detectPose = async (detector, poseClassifier, countAudio) => {
+    console.log("현재 포즈 : ", currentPose);
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -157,9 +160,6 @@ const Yoga = () => {
       let notDetected = 0;
       const video = webcamRef.current.video;
       const pose = await detector.estimatePoses(video);
-      //console.log("Left Arm Angle : ", updateLeftArmAngle(pose));
-      //console.log("Right Arm Angle : ", updateRightArmAngle(pose));
-      //console.log(pose[0].keypoints);
       const ctx = canvasRef.current.getContext("2d");
       ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       try {
@@ -315,10 +315,14 @@ const Yoga = () => {
     setIsStartPose(true);
     runMovenet();
   }
- 
+
   function stopPose() {
     setIsStartPose(false);
     clearInterval(interval);
+  }
+
+  function changePose(pose) {
+    setCurrentPose(pose.en);
   }
 
   if (isStartPose) {
@@ -326,7 +330,7 @@ const Yoga = () => {
       <div className="yoga-container">
         <div className="yoga-header">
           {poseList.map((pose) => (
-            <div class="drop-container" onClick={() => setCurrentPose(pose.en)}>
+            <div class="drop-container" onClick={() => changePose(pose)}>
               <p className="dropdown-item-1">{pose.en}</p>
             </div>
           ))}
