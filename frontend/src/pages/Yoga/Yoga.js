@@ -57,9 +57,6 @@ const Yoga = () => {
     setCurrentTime(0);
     setPoseTime(0);
     setBestPerform(0);
-  }, [currentPose]);
-
-  useDidMountEffect(() => {
     if (isStartPose) {
       stopPose();
       startYoga();
