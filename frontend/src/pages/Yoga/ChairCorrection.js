@@ -18,7 +18,7 @@ const chairStandard = [
   { x: 0.9141815, y: 0.537426, score: 0.66579205 },
 ];
 
-let beforeActoion=false;
+let beforeActoion = false;
 
 // Standart Hip Angle = 77.46
 
@@ -49,32 +49,29 @@ export const chairHipAngle = (poses) => {
     hipAngle = angle;
   }
 
-  const fail = new SpeechSynthesisUtterance("등을 더 피세요");
-  fail.lang='ko-KR';
+  const fail = new SpeechSynthesisUtterance("엉덩이를 더 내리세요");
+  fail.lang = "ko-KR";
   const success = new SpeechSynthesisUtterance("성공입니다");
-  success.lang='ko-KR';
+  success.lang = "ko-KR";
 
   if (hipAngle > 100) {
-    if(beforeActoion==false){
+    if (beforeActoion == false) {
       console.log("fail");
-    }
-    else{
+    } else {
       window.speechSynthesis.cancel();
       console.log("fail2");
       window.speechSynthesis.speak(fail);
     }
-    beforeActoion=false;
-  }
-  else{
-    if(beforeActoion==false){
+    beforeActoion = false;
+  } else {
+    if (beforeActoion == false) {
       window.speechSynthesis.cancel();
       console.log("success");
       window.speechSynthesis.speak(success);
-    }
-    else{
+    } else {
       console.log("success2");
     }
-    beforeActoion=true;
+    beforeActoion = true;
   }
 
   return { hipAngle, point1, point2, point3, cpoint1, cpoint2, cpoint3 };

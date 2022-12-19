@@ -17,6 +17,7 @@ import { treeRightLegAngle } from "./TreeCorrection";
 import { chairHipAngle } from "./ChairCorrection";
 import { dogHipAngle } from "./DogCorrection";
 import { NavLink } from "react-router-dom";
+import useDidMountEffect from "../../utils/helper/useDidMountEffect.js";
 
 let skeletonColor = "rgb(255,255,255)";
 let poseList = [
@@ -56,8 +57,13 @@ const Yoga = () => {
     setCurrentTime(0);
     setPoseTime(0);
     setBestPerform(0);
-    stopPose();
-    startYoga();
+  }, [currentPose]);
+
+  useDidMountEffect(() => {
+    if (isStartPose) {
+      stopPose();
+      startYoga();
+    }
   }, [currentPose]);
 
   const CLASS_NO = {
@@ -134,7 +140,7 @@ const Yoga = () => {
 
   const runMovenet = async () => {
     const detectorConfig = {
-      modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
+      modelType: poseDetection.movenet.modelType.SINGLE_THUNDER,
     };
     const detector = await poseDetection.createDetector(
       poseDetection.SupportedModels.MoveNet,

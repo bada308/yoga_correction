@@ -15,8 +15,8 @@ export default function Home() {
         <img src={yogaIcon} />
         <h3 className="description">Yoga Correction</h3>
         <div className="btn-section">
-          <Link to="/login">
-            <button className="btn login-btn">로그인</button>
+          <Link to="/start">
+            <button className="btn login-btn">시작</button>
           </Link>
         </div>
       </div>
