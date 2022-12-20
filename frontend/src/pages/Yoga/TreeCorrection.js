@@ -27,7 +27,7 @@ const treeStandardAngle = {
   left_arm: 39.6,
 };
 
-let beforeActoion=true;
+let beforeActoion=false;
 
 export const treeRightLegAngle = (poses) => {
   const rightHip = poses[0].keypoints[12];
