@@ -9,25 +9,21 @@ import Instructions from "../../components/Instrctions/Instructions";
 
 import "./Yoga.css";
 
-import DropDown from "../../components/DropDown/DropDown";
 import { poseImages } from "../../utils/pose_images";
+import back_arrow from "../../utils/images/arrow.png";
 import { POINTS, keypointConnections } from "../../utils/data";
 import { drawPoint, drawSegment } from "../../utils/helper";
-import {
-  updateLeftArmAngle,
-  updateRightArmAngle,
-  updateRightLegAngle,
-} from "./YogaCorrection";
+import { treeRightLegAngle } from "./TreeCorrection";
+import { chairHipAngle } from "./ChairCorrection";
+import { dogHipAngle } from "./DogCorrection";
+import { NavLink } from "react-router-dom";
+import useDidMountEffect from "../../utils/helper/useDidMountEffect.js";
 
 let skeletonColor = "rgb(255,255,255)";
 let poseList = [
-  "Tree",
-  "Chair",
-  "Cobra",
-  "Warrior",
-  "Dog",
-  "Shoulderstand",
-  "Traingle",
+  { en: "Tree", kr: "나무 자세" },
+  { en: "Chair", kr: "의자 자세" },
+  { en: "Dog", kr: "개 자세" },
 ];
 
 let interval;
@@ -61,6 +57,10 @@ const Yoga = () => {
     setCurrentTime(0);
     setPoseTime(0);
     setBestPerform(0);
+    if (isStartPose) {
+      stopPose();
+      startYoga();
+    }
   }, [currentPose]);
 
   const CLASS_NO = {
@@ -137,7 +137,7 @@ const Yoga = () => {
 
   const runMovenet = async () => {
     const detectorConfig = {
-      modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER,
+      modelType: poseDetection.movenet.modelType.SINGLE_THUNDER,
     };
     const detector = await poseDetection.createDetector(
       poseDetection.SupportedModels.MoveNet,
@@ -154,6 +154,7 @@ const Yoga = () => {
   };
 
   const detectPose = async (detector, poseClassifier, countAudio) => {
+    console.log("현재 포즈 : ", currentPose);
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -162,9 +163,6 @@ const Yoga = () => {
       let notDetected = 0;
       const video = webcamRef.current.video;
       const pose = await detector.estimatePoses(video);
-      //console.log("Left Arm Angle : ", updateLeftArmAngle(pose));
-      //console.log("Right Arm Angle : ", updateRightArmAngle(pose));
-      //console.log(pose[0].keypoints);
       const ctx = canvasRef.current.getContext("2d");
       ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       try {
@@ -174,7 +172,13 @@ const Yoga = () => {
             if (
               !(keypoint.name === "left_eye" || keypoint.name === "right_eye")
             ) {
-              drawPoint(ctx, keypoint.x, keypoint.y, 8, "rgb(255,255,255)"); // 관절에 원 그리기
+              drawPoint(
+                ctx,
+                keypoint.x * 1.5,
+                keypoint.y * 1.5,
+                8,
+                "rgb(255,255,255)"
+              ); // 관절에 원 그리기
               let connections = keypointConnections[keypoint.name]; // keypointConnection 안에는 각각의 점이 어떤 점과 연결되는지 정의되어있음
               try {
                 connections.forEach((connection) => {
@@ -216,17 +220,84 @@ const Yoga = () => {
             setCurrentTime(new Date(Date()).getTime());
             skeletonColor = "rgb(0,255,0)";
 
-            switch (classNo) {
-              case 6:
-                const legAngle = updateRightLegAngle(pose);
-                console.log("Leg Angle : ", legAngle);
-                if (legAngle > 60) {
-                  var msg = new SpeechSynthesisUtterance(
-                    "Keep your back straight"
+            switch (currentPose) {
+              case "Tree":
+                //const { rLegAngle, rightAnkle, rightKnee, rightHip } = treeRightLegAngle(pose);
+                const treeLeg = treeRightLegAngle(pose);
+                if (treeLeg.rLegAngle > 55) {
+                  drawSegment(
+                    ctx,
+                    [treeLeg.rightAnkle.x, treeLeg.rightAnkle.y],
+                    [treeLeg.rightKnee.x, treeLeg.rightKnee.y],
+                    "rgb(255, 0, 0)"
                   );
-                  window.speechSynthesis.speak(msg);
+                  drawSegment(
+                    ctx,
+                    [treeLeg.rightHip.x, treeLeg.rightHip.y],
+                    [treeLeg.rightKnee.x, treeLeg.rightKnee.y],
+                    "rgb(255, 0, 0)"
+                  );
                 }
                 break;
+              case "Chair":
+                const chairHip = chairHipAngle(pose);
+                if (chairHip.hipAngle > 100) {
+                  drawSegment(
+                    ctx,
+                    [chairHip.point1.x, chairHip.point1.y],
+                    [chairHip.point2.x, chairHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.point3.x, chairHip.point3.y],
+                    [chairHip.point2.x, chairHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.cpoint1.x, chairHip.cpoint1.y],
+                    [chairHip.cpoint2.x, chairHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [chairHip.cpoint3.x, chairHip.cpoint3.y],
+                    [chairHip.cpoint2.x, chairHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                }
+                break;
+              case "Dog":
+                const dogHip = dogHipAngle(pose);
+                if (dogHip.hipAngle > 90 || dogHip.hipAngle < 50) {
+                  drawSegment(
+                    ctx,
+                    [dogHip.point1.x, dogHip.point1.y],
+                    [dogHip.point2.x, dogHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.point3.x, dogHip.point3.y],
+                    [dogHip.point2.x, dogHip.point2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.cpoint1.x, dogHip.cpoint1.y],
+                    [dogHip.cpoint2.x, dogHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                  drawSegment(
+                    ctx,
+                    [dogHip.cpoint3.x, dogHip.cpoint3.y],
+                    [dogHip.cpoint2.x, dogHip.cpoint2.y],
+                    "rgb(255, 0, 0)"
+                  );
+                }
+                break;
+
               default:
                 break;
             }
@@ -253,9 +324,23 @@ const Yoga = () => {
     clearInterval(interval);
   }
 
+  function changePose(pose) {
+    setCurrentPose(pose.en);
+  }
+
   if (isStartPose) {
     return (
       <div className="yoga-container">
+        <div className="yoga-header">
+          {poseList.map((pose) => (
+            <div class="drop-container" onClick={() => changePose(pose)}>
+              <p className="dropdown-item-1">{pose.en}</p>
+            </div>
+          ))}
+          <button onClick={stopPose} className="secondary-btn">
+            Stop Pose
+          </button>
+        </div>
         <div className="performance-container">
           <div className="pose-performance">
             <h4>Pose Time: {poseTime} s</h4>
@@ -264,15 +349,14 @@ const Yoga = () => {
             <h4>Best: {bestPerform} s</h4>
           </div>
         </div>
-        <div>
+        <div className="webcam-canvas-container">
           <Webcam
-            width="640px"
-            height="480px"
+            width="960px"
+            height="720px"
             id="webcam"
             ref={webcamRef}
             style={{
               position: "absolute",
-              left: 120,
               top: 100,
               padding: "0px",
             }}
@@ -280,11 +364,10 @@ const Yoga = () => {
           <canvas
             ref={canvasRef}
             id="my-canvas"
-            width="640px"
-            height="480px"
+            width="960px"
+            height="720px"
             style={{
               position: "absolute",
-              left: 120,
               top: 100,
               zIndex: 1,
             }}
@@ -293,24 +376,23 @@ const Yoga = () => {
             <img src={poseImages[currentPose]} className="pose-img" />
           </div>
         </div>
-        <button onClick={stopPose} className="secondary-btn">
-          Stop Pose
-        </button>
       </div>
     );
   }
 
   return (
     <div className="yoga-container">
-      <DropDown
-        poseList={poseList}
-        currentPose={currentPose}
-        setCurrentPose={setCurrentPose}
-      />
+      <div className="yoga-header">
+        {poseList.map((pose) => (
+          <div class="drop-container" onClick={() => setCurrentPose(pose.en)}>
+            <p className="dropdown-item-1">{pose.en}</p>
+          </div>
+        ))}
+        <button onClick={startYoga} className="secondary-btn">
+          Start
+        </button>
+      </div>
       <Instructions currentPose={currentPose} />
-      <button onClick={startYoga} className="secondary-btn">
-        Start Pose
-      </button>
     </div>
   );
 };
