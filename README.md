@@ -28,7 +28,7 @@ pose estimation은 사람의 관절을 keypoint로 지정해 사람의 자세를
   해당 프로젝트에서는 정확도를 놆이는 것이 목표이므로 Thunder 모델을 사용했다.
 
 #### keras를 이용한 다중 분류 모델
-MoveNet의 결과값인 17개의 keypoint를 featrue 넣어 요가 동작 이름을 label로 받는다.
+MoveNet의 결과값인 17개의 keypoint를 feature로 넣어 요가 동작 이름을 label로 받는다.
 
 ### flow chart
 ---
