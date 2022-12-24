@@ -49,10 +49,12 @@ MoveNet의 결과값인 17개의 keypoint를 feature로 넣어 요가 동작 이
 2.사용자의 각도도 같은 방법으로 계산하여 올바른 각도와 사용자의 각도가 차이가 큰 경우 시각적 피드백과 음성 피드백을 동시에 제공
 
 #### 전체 flow chart
+---
 <img width="392" alt="스크린샷 2022-12-24 오후 3 41 37" src="https://user-images.githubusercontent.com/88534959/209424768-7e64b543-d1fb-4ade-902d-573d3047f04d.png">
 동작 분류와 자세 교정 알고리즘이 포함된 전체 flow chart
 
 ### 실행 결과
+---
 <img width="470" alt="스크린샷 2022-12-24 오후 6 08 14" src="https://user-images.githubusercontent.com/88534959/209428918-b116b08c-9be8-4abe-a86f-68b7d55c25d3.png">
 
 [![Video Label](http://img.youtube.com/vi/3Uz2qNt3Iqw/0.jpg)](https://youtu.be/3Uz2qNt3Iqw)
