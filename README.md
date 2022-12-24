@@ -67,3 +67,8 @@ MoveNet의 결과값인 17개의 keypoint를 feature로 넣어 요가 동작 이
 * version 1은 혼자서만 요가 코칭을 받을 수 있지만 socket통신을 통해서 다른 사람과 함께 요가 코칭을 받을 수 있는 기능 제공
 * 사용자의 꾸준한 운동을 촉진하기 위해서 친구기능, 요가 기록 등 다양한 커뮤니케이션 추가
 
+### 실행
+---
+1. 터미널에서 frontend 폴더로 이동
+2. npm install -> node modules 다운
+3. npm start
