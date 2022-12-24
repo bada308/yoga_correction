@@ -5,6 +5,7 @@
 카카오 vx에서 출시한 동작인식 기반 인공지능 홈트레이닝 앱과 비교했을 때,
 * 잘못된 자세를 취해도 동작 점수가 perfect가 뜨는 등 인식 정확도가 떨어짐
 <img width="234" alt="스크린샷 2022-12-24 오후 3 32 37" src="https://user-images.githubusercontent.com/88534959/209424538-e1c4a4db-7526-4917-9de5-aaf77be997e3.png">
+
 * 잘못된 부위를 빨간색 선으로 표시해줄 뿐 구체적으로 어떻게 고쳐야 하는지에 대한 피드백이 없었음
 <img width="231" alt="스크린샷 2022-12-24 오후 3 32 53" src="https://user-images.githubusercontent.com/88534959/209424546-faa9a159-c8d7-40ce-807b-0ae082e46169.png">
 
