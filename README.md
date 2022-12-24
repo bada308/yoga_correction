@@ -52,9 +52,16 @@ MoveNet의 결과값인 17개의 keypoint를 feature로 넣어 요가 동작 이
 <img width="392" alt="스크린샷 2022-12-24 오후 3 41 37" src="https://user-images.githubusercontent.com/88534959/209424768-7e64b543-d1fb-4ade-902d-573d3047f04d.png">
 동작 분류와 자세 교정 알고리즘이 포함된 전체 flow chart
 
+### 실행 결과
+<img width="470" alt="스크린샷 2022-12-24 오후 6 08 14" src="https://user-images.githubusercontent.com/88534959/209428918-b116b08c-9be8-4abe-a86f-68b7d55c25d3.png">
+
+[![Video Label](http://img.youtube.com/vi/3Uz2qNt3Iqw/0.jpg)](https://youtu.be/3Uz2qNt3Iqw)
+
+
+
 ### 추후 계획
 ---
 * 각 요가 당 한 부위만 skeleton 사이으 각도를 계산항 사용자에게 피드백을 제공하고 있으나, 사용자엑 더 정확한 피드백을 제공하기 위해서 각도르 계산하는 부위를 더 늘려나갈 예정
-* version 1은 혼자서만 요가 코칭을 받을 수 있지만 socket통신을 통해거 다른 사람고 함께 요가 코칭을 받을 수 있는 기능 제공
+* version 1은 혼자서만 요가 코칭을 받을 수 있지만 socket통신을 통해서 다른 사람과 함께 요가 코칭을 받을 수 있는 기능 제공
 * 사용자의 꾸준한 운동을 촉진하기 위해서 친구기능, 요가 기록 등 다양한 커뮤니케이션 추가
 
