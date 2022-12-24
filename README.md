@@ -4,9 +4,9 @@
 ---
 카카오 vx에서 출시한 동작인식 기반 인공지능 홈트레이닝 앱과 비교했을 때,
 * 잘못된 자세를 취해도 동작 점수가 perfect가 뜨는 등 인식 정확도가 떨어짐
-  <img width="234" alt="스크린샷 2022-12-24 오후 3 32 37" src="https://user-images.githubusercontent.com/88534959/209424538-e1c4a4db-7526-4917-9de5-aaf77be997e3.png">
+<img width="234" alt="스크린샷 2022-12-24 오후 3 32 37" src="https://user-images.githubusercontent.com/88534959/209424538-e1c4a4db-7526-4917-9de5-aaf77be997e3.png">
 * 잘못된 부위를 빨간색 선으로 표시해줄 뿐 구체적으로 어떻게 고쳐야 하는지에 대한 피드백이 없었음
-  <img width="231" alt="스크린샷 2022-12-24 오후 3 32 53" src="https://user-images.githubusercontent.com/88534959/209424546-faa9a159-c8d7-40ce-807b-0ae082e46169.png">
+<img width="231" alt="스크린샷 2022-12-24 오후 3 32 53" src="https://user-images.githubusercontent.com/88534959/209424546-faa9a159-c8d7-40ce-807b-0ae082e46169.png">
 
 위와 같은 문제점이 존재했다.
 따라서 동작 정확도를 높이고 시각적 피드백과 음성 피드백을 통해 구체적인 피드백을 제공하는 것을 목표로 하였다.
@@ -45,6 +45,6 @@ MoveNet의 결과값인 17개의 keypoint를 featrue 넣어 요가 동작 이름
 2. 사용자의 각도도 같은 방법으로 계산하여 올바른 각도와 사용자의 각도가 차이가 큰 경우 시각적 피드백과 음성 피드백을 동시에 제공
 
 #### 전체 flow chart
-<img width="235" alt="스크린샷 2022-12-24 오후 3 27 00" src="https://user-images.githubusercontent.com/88534959/209424419-63494378-5989-42b0-b277-fe3308456491.png">
+<img width="392" alt="스크린샷 2022-12-24 오후 3 41 37" src="https://user-images.githubusercontent.com/88534959/209424768-7e64b543-d1fb-4ade-902d-573d3047f04d.png">
 동작 분류와 자세 교정 알고리즘이 포함된 전체 flow chart
 
