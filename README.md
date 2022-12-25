@@ -59,6 +59,7 @@ MoveNet의 결과값인 17개의 keypoint를 feature로 넣어 요가 동작 이
 
 [![Video Label](http://img.youtube.com/vi/3Uz2qNt3Iqw/0.jpg)](https://youtu.be/3Uz2qNt3Iqw)
 
+위 사진을 누르면 비디오가 실행됩니다.
 
 
 ### 추후 계획
